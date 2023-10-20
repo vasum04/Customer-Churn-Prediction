@@ -5,8 +5,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import pickle
-
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Load the dataset
 churn_data = pd.read_excel("./customer_churn_large_dataset.xlsx")
@@ -86,3 +86,25 @@ predicted_churn = loaded_model.predict(sample_data)
 predicted_probability = loaded_model.predict_proba(sample_data)
 
 print(predicted_churn[0], predicted_probability[0][1])
+
+# Metrics for Random Forest and Optimized Logistic Regression
+rf_metrics = [accuracy_test_rf, precision_test_rf, recall_test_rf, f1_test_rf]
+logreg_metrics = [accuracy_test_optimized_logreg, precision_test_optimized_logreg, recall_test_optimized_logreg, f1_test_optimized_logreg]
+
+# Visualization setup
+labels = ['Accuracy', 'Precision', 'Recall', 'F1-Score']
+index = np.arange(len(labels))
+bar_width = 0.35
+
+# Generate the visualization for model comparison
+fig, ax = plt.subplots(figsize=(10, 6))
+bar1 = ax.bar(index, rf_metrics, bar_width, label='Random Forest', color='b', alpha=0.7)
+bar2 = ax.bar(index + bar_width, logreg_metrics, bar_width, label='Optimized Logistic Regression', color='r', alpha=0.7)
+ax.set_xlabel('Metrics')
+ax.set_ylabel('Scores')
+ax.set_title('Model Performance Comparison')
+ax.set_xticks(index + bar_width / 2)
+ax.set_xticklabels(labels)
+ax.legend()
+plt.tight_layout()
+plt.show()
