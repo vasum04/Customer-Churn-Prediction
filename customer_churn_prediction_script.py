@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 
@@ -49,3 +50,22 @@ accuracy_test_rf = accuracy_score(y_test, y_test_pred_rf)
 precision_test_rf = precision_score(y_test, y_test_pred_rf)
 recall_test_rf = recall_score(y_test, y_test_pred_rf)
 f1_test_rf = f1_score(y_test, y_test_pred_rf)
+
+# Model Building with Optimized Logistic Regression
+optimized_logreg_model = LogisticRegression(
+    solver='newton-cg',
+    penalty='l2',
+    C=0.0001,
+    max_iter=5000,
+    random_state=42
+)
+optimized_logreg_model.fit(X_train, y_train)
+y_test_pred_optimized_logreg = optimized_logreg_model.predict(X_test)
+accuracy_test_optimized_logreg = accuracy_score(y_test, y_test_pred_optimized_logreg)
+precision_test_optimized_logreg = precision_score(y_test, y_test_pred_optimized_logreg)
+recall_test_optimized_logreg = recall_score(y_test, y_test_pred_optimized_logreg)
+f1_test_optimized_logreg = f1_score(y_test, y_test_pred_optimized_logreg)
+
+# Model Evaluation
+y_test_pred_rf = rf_model.predict(X_test)
+y_test_pred_optimized_logreg = optimized_logreg_model.predict(X_test)
