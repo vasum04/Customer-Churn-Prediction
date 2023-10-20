@@ -1,6 +1,9 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
 
 # Load the dataset
 churn_data = pd.read_excel("./customer_churn_large_dataset.xlsx")
@@ -30,3 +33,19 @@ features_to_scale = ["Age", "Subscription_Length_Months", "Monthly_Bill", "Total
 scaler = MinMaxScaler()
 X_train[features_to_scale] = scaler.fit_transform(X_train[features_to_scale])
 X_test[features_to_scale] = scaler.transform(X_test[features_to_scale])
+
+# Model Building with Random Forest
+rf_model = RandomForestClassifier(
+    n_estimators=150,
+    min_samples_split=2,
+    min_samples_leaf=5,
+    max_features='log2',
+    max_depth=10,
+    random_state=42
+)
+rf_model.fit(X_train, y_train)
+y_test_pred_rf = rf_model.predict(X_test)
+accuracy_test_rf = accuracy_score(y_test, y_test_pred_rf)
+precision_test_rf = precision_score(y_test, y_test_pred_rf)
+recall_test_rf = recall_score(y_test, y_test_pred_rf)
+f1_test_rf = f1_score(y_test, y_test_pred_rf)
