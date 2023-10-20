@@ -48,9 +48,7 @@ A simulated deployment was demonstrated. The trained Optimized  Logistic Regress
 Model performance metrics and visualizations:
 
 
-
-
-Here's the visualization comparing the performance metrics of the Random Forest and Optimized Logistic Regression models:
+![Here's the visualization comparing the performance metrics of the Random Forest and Optimized Logistic Regression models:](Visualisation.png)
 
 Accuracy: Both models have similar accuracy, with the Optimized Logistic Regression model performing slightly better.
 
