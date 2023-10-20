@@ -4,6 +4,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import pickle
+
 
 
 # Load the dataset
@@ -69,3 +71,18 @@ f1_test_optimized_logreg = f1_score(y_test, y_test_pred_optimized_logreg)
 # Model Evaluation
 y_test_pred_rf = rf_model.predict(X_test)
 y_test_pred_optimized_logreg = optimized_logreg_model.predict(X_test)
+
+# Model Deployment (Serialization)
+model_filename = "optimized_logreg_model.pkl"
+with open(model_filename, "wb") as model_file:
+    pickle.dump(optimized_logreg_model, model_file)
+
+# Load the model and make a prediction
+with open(model_filename, "rb") as model_file:
+    loaded_model = pickle.load(model_file)
+
+sample_data = X_test.sample(1, random_state=42)
+predicted_churn = loaded_model.predict(sample_data)
+predicted_probability = loaded_model.predict_proba(sample_data)
+
+print(predicted_churn[0], predicted_probability[0][1])
